@@ -14,9 +14,12 @@ warnings.filterwarnings('ignore')
 from inference import get_model
 import supervision as sv
 
+from dotenv import load_dotenv
+load_dotenv()
 
-
-ROBOFLOW_API_KEY = 'VcXIUvUuLbYyzKK7jjqp'
+import importlib
+_inf = importlib.import_module('inference')
+ROBOFLOW_API_KEY = os.getenv("ROBOFLOW_API_KEY") or getattr(_inf, 'API_KEY', None)
 
 PLAYER_DETECTION_MODEL_ID = "football-players-detection-3zvbc/11"
 PLAYER_DETECTION_MODEL = get_model(model_id=PLAYER_DETECTION_MODEL_ID, api_key=ROBOFLOW_API_KEY)
