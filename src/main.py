@@ -110,3 +110,5 @@ annotated_frame = triangle_annotator.annotate(
     detections=ball_detections)
 
 sv.plot_image(annotated_frame)
+
+
