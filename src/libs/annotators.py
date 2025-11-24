@@ -76,6 +76,72 @@ def draw_pitch(
 
     return pitch_image
 
+def draw_points_on_pitch(
+    config: SoccerPitchConfiguration,
+    xy: np.ndarray,
+    face_color: sv.Color = sv.Color.RED,
+    edge_color: sv.Color = sv.Color.BLACK,
+    radius: int = 10,
+    thickness: int = 2,
+    padding: int = 50,
+    scale: float = 0.1,
+    pitch: Optional[np.ndarray] = None
+) -> np.ndarray:
+    """
+    Draws points on a soccer pitch.
+
+    Args:
+        config (SoccerPitchConfiguration): Configuration object containing the
+            dimensions and layout of the pitch.
+        xy (np.ndarray): Array of points to be drawn, with each point represented by
+            its (x, y) coordinates.
+        face_color (sv.Color, optional): Color of the point faces.
+            Defaults to sv.Color.RED.
+        edge_color (sv.Color, optional): Color of the point edges.
+            Defaults to sv.Color.BLACK.
+        radius (int, optional): Radius of the points in pixels.
+            Defaults to 10.
+        thickness (int, optional): Thickness of the point edges in pixels.
+            Defaults to 2.
+        padding (int, optional): Padding around the pitch in pixels.
+            Defaults to 50.
+        scale (float, optional): Scaling factor for the pitch dimensions.
+            Defaults to 0.1.
+        pitch (Optional[np.ndarray], optional): Existing pitch image to draw points on.
+            If None, a new pitch will be created. Defaults to None.
+
+    Returns:
+        np.ndarray: Image of the soccer pitch with points drawn on it.
+    """
+    if pitch is None:
+        pitch = draw_pitch(
+            config=config,
+            padding=padding,
+            scale=scale
+        )
+
+    for point in xy:
+        scaled_point = (
+            int(point[0] * scale) + padding,
+            int(point[1] * scale) + padding
+        )
+        cv2.circle(
+            img=pitch,
+            center=scaled_point,
+            radius=radius,
+            color=face_color.as_bgr(),
+            thickness=-1
+        )
+        cv2.circle(
+            img=pitch,
+            center=scaled_point,
+            radius=radius,
+            color=edge_color.as_bgr(),
+            thickness=thickness
+        )
+
+    return pitch
+
 def draw_paths_on_pitch(
         config: SoccerPitchConfiguration,
         paths: List[np.ndarray],

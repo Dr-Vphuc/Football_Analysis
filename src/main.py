@@ -16,6 +16,9 @@ import numpy as np
 import torch
 from libs.func import resolve_goalkeepers_team_id, draw_pitch, draw_pitch_voronoi_diagram_2
 from libs.team import TeamClassifier
+from libs.view import ViewTransformer
+from libs.configs import SoccerPitchConfiguration
+from libs.annotators import draw_points_on_pitch, draw_pitch_voronoi_diagram
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -26,6 +29,12 @@ ROBOFLOW_API_KEY = os.getenv("ROBOFLOW_API_KEY") or getattr(_inf, 'API_KEY', Non
 PLAYER_DETECTION_MODEL_ID = "football-players-detection-3zvbc/11"
 PLAYER_DETECTION_MODEL = get_model(model_id=PLAYER_DETECTION_MODEL_ID, api_key=ROBOFLOW_API_KEY)
 
+FIELD_DETECTION_MODEL_ID = 'football-field-detection-f07vi/14'
+FIELD_DETECTION_MODEL = get_model(
+    model_id = FIELD_DETECTION_MODEL_ID,
+    api_key = ROBOFLOW_API_KEY
+)
+
 SOURCE_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/121364_0.mp4'
 BALL_ID = 0
 GOALKEEPER_ID = 1
@@ -33,6 +42,7 @@ PLAYER_ID = 2
 REFEREE_ID = 3
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 BATCH_SIZE = 32
+CONFIG = SoccerPitchConfiguration()
 
  
 ellipse_annotator = sv.EllipseAnnotator(
@@ -112,3 +122,121 @@ annotated_frame = triangle_annotator.annotate(
 sv.plot_image(annotated_frame)
 
 
+players_detections = sv.Detections.merge([
+    players_detections, goalkeepers_detections
+])
+
+# detect pitch key points
+
+result = FIELD_DETECTION_MODEL.infer(frame, confidence=0.3)[0]
+key_points = sv.KeyPoints.from_inference(result)
+
+
+# project ball, players and referies on pitch
+
+filter = key_points.confidence[0] > 0.5
+frame_reference_points = key_points.xy[0][filter]
+pitch_reference_points = np.array(CONFIG.vertices)[filter]
+
+transformer = ViewTransformer(
+    source=frame_reference_points,
+    target=pitch_reference_points
+)
+
+frame_ball_xy = ball_detections.get_anchors_coordinates(sv.Position.BOTTOM_CENTER)
+pitch_ball_xy = transformer.transform_points(points=frame_ball_xy)
+
+players_xy = players_detections.get_anchors_coordinates(sv.Position.BOTTOM_CENTER)
+pitch_players_xy = transformer.transform_points(points=players_xy)
+
+referees_xy = referees_detections.get_anchors_coordinates(sv.Position.BOTTOM_CENTER)
+pitch_referees_xy = transformer.transform_points(points=referees_xy)
+
+# visualize video game-style radar view
+
+annotated_frame = draw_pitch(CONFIG)
+annotated_frame = draw_points_on_pitch(
+    config=CONFIG,
+    xy=pitch_ball_xy,
+    face_color=sv.Color.WHITE,
+    edge_color=sv.Color.BLACK,
+    radius=10,
+    pitch=annotated_frame)
+annotated_frame = draw_points_on_pitch(
+    config=CONFIG,
+    xy=pitch_players_xy[players_detections.class_id == 0],
+    face_color=sv.Color.from_hex('00BFFF'),
+    edge_color=sv.Color.BLACK,
+    radius=16,
+    pitch=annotated_frame)
+annotated_frame = draw_points_on_pitch(
+    config=CONFIG,
+    xy=pitch_players_xy[players_detections.class_id == 1],
+    face_color=sv.Color.from_hex('FF1493'),
+    edge_color=sv.Color.BLACK,
+    radius=16,
+    pitch=annotated_frame)
+annotated_frame = draw_points_on_pitch(
+    config=CONFIG,
+    xy=pitch_referees_xy,
+    face_color=sv.Color.from_hex('FFD700'),
+    edge_color=sv.Color.BLACK,
+    radius=16,
+    pitch=annotated_frame)
+
+sv.plot_image(annotated_frame)
+
+
+# visualize voronoi diagram
+
+annotated_frame = draw_pitch(CONFIG)
+annotated_frame = draw_pitch_voronoi_diagram(
+    config=CONFIG,
+    team_1_xy=pitch_players_xy[players_detections.class_id == 0],
+    team_2_xy=pitch_players_xy[players_detections.class_id == 1],
+    team_1_color=sv.Color.from_hex('00BFFF'),
+    team_2_color=sv.Color.from_hex('FF1493'),
+    pitch=annotated_frame)
+
+sv.plot_image(annotated_frame)
+
+# visualize voronoi diagram with blend
+
+annotated_frame = draw_pitch(
+    config=CONFIG,
+    background_color=sv.Color.WHITE,
+    line_color=sv.Color.BLACK
+)
+annotated_frame = draw_pitch_voronoi_diagram_2(
+    config=CONFIG,
+    team_1_xy=pitch_players_xy[players_detections.class_id == 0],
+    team_2_xy=pitch_players_xy[players_detections.class_id == 1],
+    team_1_color=sv.Color.from_hex('00BFFF'),
+    team_2_color=sv.Color.from_hex('FF1493'),
+    pitch=annotated_frame)
+annotated_frame = draw_points_on_pitch(
+    config=CONFIG,
+    xy=pitch_ball_xy,
+    face_color=sv.Color.WHITE,
+    edge_color=sv.Color.WHITE,
+    radius=8,
+    thickness=1,
+    pitch=annotated_frame)
+annotated_frame = draw_points_on_pitch(
+    config=CONFIG,
+    xy=pitch_players_xy[players_detections.class_id == 0],
+    face_color=sv.Color.from_hex('00BFFF'),
+    edge_color=sv.Color.WHITE,
+    radius=16,
+    thickness=1,
+    pitch=annotated_frame)
+annotated_frame = draw_points_on_pitch(
+    config=CONFIG,
+    xy=pitch_players_xy[players_detections.class_id == 1],
+    face_color=sv.Color.from_hex('FF1493'),
+    edge_color=sv.Color.WHITE,
+    radius=16,
+    thickness=1,
+    pitch=annotated_frame)
+
+sv.plot_image(annotated_frame)
