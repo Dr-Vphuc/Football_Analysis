@@ -13,9 +13,9 @@ def draw_pitch(
         line_color: sv.Color = sv.Color.WHITE,
         padding: int = 50,
         line_thickness: int = 4,
-        point_radius: int = 8,
-        scale: float = 0.1
+        point_radius: int = 8
 ) -> np.ndarray:
+    scale = 0.1
     
     scaled_width = int(config.width * scale)
     scaled_length = int(config.length * scale)

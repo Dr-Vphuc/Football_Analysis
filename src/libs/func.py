@@ -4,7 +4,36 @@ from typing import Optional
 from .configs import SoccerPitchConfiguration
 from .annotators import draw_pitch
 import supervision as sv
+from typing import List, Union
 
+
+def replace_outliers_based_on_distance(
+    positions: List[np.ndarray],
+    distance_threshold: float
+) -> List[np.ndarray]:
+    last_valid_position: Union[np.ndarray, None] = None
+    cleaned_positions: List[np.ndarray] = []
+
+    for position in positions:
+        if len(position) == 0:
+            # If the current position is already empty, just add it to the cleaned positions
+            cleaned_positions.append(position)
+        else:
+            if last_valid_position is None:
+                # If there's no valid last position, accept the first valid one
+                cleaned_positions.append(position)
+                last_valid_position = position
+            else:
+                # Calculate the distance from the last valid position
+                distance = np.linalg.norm(position - last_valid_position)
+                if distance > distance_threshold:
+                    # Replace with empty array if the distance exceeds the threshold
+                    cleaned_positions.append(np.array([], dtype=np.float64))
+                else:
+                    cleaned_positions.append(position)
+                    last_valid_position = position
+
+    return cleaned_positions
 
 def draw_pitch_voronoi_diagram_2(
     config: SoccerPitchConfiguration,
@@ -97,6 +126,7 @@ def resolve_goalkeepers_team_id(
 ) -> np.ndarray:
     goalkeepers_xy = goalkeepers.get_anchors_coordinates(sv.Position.BOTTOM_CENTER)
     players_xy = players.get_anchors_coordinates(sv.Position.BOTTOM_CENTER)
+    
     team_0_centroid = players_xy[players.class_id == 0].mean(axis=0)
     team_1_centroid = players_xy[players.class_id == 1].mean(axis=0)
     goalkeepers_team_id = []
