@@ -6,4 +6,5 @@ Mã nguồn được triển khai trên Linux, nếu gặp lỗi liên quan đ�
 
 Tuy nhiên cân nhắc chỉnh sửa mã nguồn cho hợp lí vì lúc này việc tính toán phải thực hiện lại từ đầu với mỗi 1 loại video, dự đoán có thể đến tầm 2h30p với input video 30s (vì thời gian thực thi của code hiện tại tầm khoảng 30 phút cho video 30s). 
 
-Hướng dẫn sửa : tách module ở phần vòng for dòng ... , sau khi xuất video xong phải release() writer lại kể kết thúc luồng của nó.
+Hướng dẫn sửa : tách module ở phần vòng for dòng 124, sau khi xuất video xong phải release() writer lại kể kết thúc luồng của nó.
+
