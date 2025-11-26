@@ -67,6 +67,17 @@ tracker.reset()
 frame_generator = sv.get_video_frames_generator(SOURCE_VIDEO_PATH)
 
 for frame in frame_generator:
+    result = PLAYER_DETECTION_MODEL.infer(frame, confidence=0.3)[0]
+    detections = sv.Detections.from_inference(result)
+
+    players_detections = detections[detections.class_id == PLAYER_ID]
+    players_crops = [sv.crop_image(frame, xyxy) for xyxy in players_detections.xyxy]
+
+    team_classifier = TeamClassifier(DEVICE, BATCH_SIZE)
+    team_classifier.fit(players_crops)
+
+
+for frame in frame_generator:
     # ball, goalkeeper, player, referee detection
 
     result = PLAYER_DETECTION_MODEL.infer(frame, confidence=0.3)[0]
@@ -84,10 +95,6 @@ for frame in frame_generator:
     referees_detections = all_detections[all_detections.class_id == REFEREE_ID]
 
     # team assignment
-
-    team_classifier = TeamClassifier(DEVICE, BATCH_SIZE)
-    players_crops = [sv.crop_image(frame, xyxy) for xyxy in players_detections.xyxy]
-    team_classifier.fit(players_crops)
     players_detections.class_id = team_classifier.predict(players_crops)
 
     goalkeepers_detections.class_id = resolve_goalkeepers_team_id(
