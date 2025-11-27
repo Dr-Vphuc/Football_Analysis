@@ -2,7 +2,7 @@
 
 Lưu ý: Chuẩn bị > 9 GB dung lượng cho việc tải tất cả thư viện trong requirement.txt và source code.  
 
-Mã nguồn được triển khai trên Linux, nếu gặp lỗi liên quan đến sinh video khi chạy trên các hệ điều hành khác, rất có thể là do việc sinh file mp4 nhiều luồng 1 lúc không thích ứng với hệ điều hành của bạn (thầy), khi đó thay vì chạy file main, hãy chạy các file tách từng phần riêng tôi (em) đã chuẩn bị sẵn gồm các file track.py, voronoi.py, blended_voronoi.py, ball_track.py, gameplay.py (Phần hướng dẫn thực thị bên dưới có hướng dẫn chạy các file này).
+Mã nguồn được triển khai trên Linux, nếu gặp lỗi liên quan đến sinh video khi chạy trên các hệ điều hành khác, rất có thể là do việc sinh file mp4 nhiều luồng 1 lúc không thích ứng với hệ điều hành của bạn (thầy), khi đó thay vì chạy file main, hãy chạy các file tách từng phần riêng tôi (em) đã chuẩn bị sẵn gồm các file track.py, voronoi.py, blended_voronoi.py, ball_track.py, gameplay.py
 
 Cân nhắc khi chạy file main : Hãy dừng chương trình (bằng Ctrl+C trên terminal) khi sinh được 4-5s sau đó kiểm tra vid có được ghi đúng như mong đợi không để tránh mất thời gian, nếu không hãy thực hiện theo hướng dẫn bên trên.
 
