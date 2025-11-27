@@ -15,6 +15,26 @@ def draw_pitch(
         line_thickness: int = 4,
         point_radius: int = 8
 ) -> np.ndarray:
+    """
+    Draw 2D Football Map (Soccer pitch)
+
+    Args:
+        config (SoccerPitchConfiguration): Configuration object containing the
+            dimensions and layout of the pitch.
+        background_color (sv.color, optional): Color of the background.
+            Defaults to v.Color(34, 139, 34).
+        line_color (sv.Color, optional): Color of the pitch lines.
+            Defaults to sv.Color.WHITE.
+        padding (int, optional): Padding around the pitch in pixels.
+            Defaults to 50.
+        line_thickness (int, optional): Thickness of the pitch lines in pixels.
+            Defaults to 4.
+        point_radius (int, optional): Radius of the points (e.g., penalty spots) in pixels.
+            Defaults to 8.
+
+    Returns:
+        np.ndarray: Image of the soccer pitch.
+    """
     scale = 0.1
     
     scaled_width = int(config.width * scale)
@@ -191,6 +211,32 @@ def draw_pitch_voronoi_diagram(
         scale: float = 0.1,
         pitch: Optional[np.ndarray] = None
 ) -> np.ndarray:
+    """
+    Draws a Voronoi diagram on a soccer pitch representing the control areas of two teams.
+
+    Args:
+        config (SoccerPitchConfiguration): Configuration object containing the
+            dimensions and layout of the pitch.
+        team_1_xy (np.ndarray): Array of (x, y) coordinates representing the positions
+            of players in team 1.
+        team_2_xy (np.ndarray): Array of (x, y) coordinates representing the positions
+            of players in team 2.
+        team_1_color (sv.Color, optional): Color representing the control area of
+            team 1. Defaults to sv.Color.RED.
+        team_2_color (sv.Color, optional): Color representing the control area of
+            team 2. Defaults to sv.Color.WHITE.
+        opacity (float, optional): Opacity of the Voronoi diagram overlay.
+            Defaults to 0.5.
+        padding (int, optional): Padding around the pitch in pixels.
+            Defaults to 50.
+        scale (float, optional): Scaling factor for the pitch dimensions.
+            Defaults to 0.1.
+        pitch (Optional[np.ndarray], optional): Existing pitch image to draw the
+            Voronoi diagram on. If None, a new pitch will be created. Defaults to None.
+
+    Returns:
+        np.ndarray: Image of the soccer pitch with the Voronoi diagram overlay.
+    """
     if pitch is None:
         pitch = draw_pitch(
             config=config,

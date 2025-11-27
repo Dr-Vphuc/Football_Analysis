@@ -18,5 +18,5 @@ Trìnhbay: chứa slides, báo cáo PDF của môn học
 input: video input cho demo của dự án  
 output: các video output  
 src: toàn bộ mã nguồn của dự án  
- - lib: module hỗ trợ chia team vào 2 đội (team.py), vẽ các bản đồ 2D sân bóng (view.py), thông số của sân bóng 2D (configs.py), 1 số hàm khác (func.py)
+ - lib: module hỗ trợ chia team vào 2 đội (team.py), vẽ các bản đồ 2D sân bóng (annotators.py), thông số của sân bóng 2D (configs.py), 1 số hàm khác (func.py), homography view transform (view.py)
  - main.py: phần thực hiện các logic chính của chương trình
