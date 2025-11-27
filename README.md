@@ -8,5 +8,5 @@ Tuy nhiên cân nhắc chỉnh sửa mã nguồn cho hợp lí vì lúc này vi�
 
 Hướng dẫn sửa : tách module ở phần vòng for dòng 124, sau khi xuất video xong phải release() writer lại kể kết thúc luồng của nó.
 
-[![Demo Video](ss)](https://youtu.be/tcK_ONtxWRw)
+[![Demo Video](ss)](https://youtu.be/tcK_ONtxWRw)  
 [![Demo Video](https://i.ytimg.com/an_webp/tcK_ONtxWRw/mqdefault_6s.webp?du=3000&sqp=CLy9ockG&rs=AOn4CLD0Y0gU8PLgHh6LlLi6niPmQQ6BWw)](https://youtu.be/tcK_ONtxWRw)
