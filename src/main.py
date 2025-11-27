@@ -41,12 +41,12 @@ PLAYER_DETECTION_MODEL = get_model(model_id=PLAYER_DETECTION_MODEL_ID, api_key=R
 FIELD_DETECTION_MODEL_ID = 'football-field-detection-f07vi/14'
 FIELD_DETECTION_MODEL = get_model(model_id=FIELD_DETECTION_MODEL_ID, api_key=ROBOFLOW_API_KEY)
 
-SOURCE_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/121364_0.mp4'
-TRACKING_OUTPUT_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/tracking_121364_0.mp4'
-GAMEPLAY_OUTPUT_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/gameplay_121364_0.mp4'
-VORONOI_OUTPUT_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/voronoi_121364_0.mp4'
-BLENDED_VORONOI_OUTPUT_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/blended_voronoi_121364_0.mp4'
-BALL_TRACKING_OUTPUT_IMG_PATH = '/home/vphuc/Project/AI/Football_Analysis/ball_tracking_121364_0.jpg'
+SOURCE_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/input/121364_0.mp4'
+TRACKING_OUTPUT_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/output/tracking_121364_0.mp4'
+GAMEPLAY_OUTPUT_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/output/gameplay_121364_0.mp4'
+VORONOI_OUTPUT_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/output/voronoi_121364_0.mp4'
+BLENDED_VORONOI_OUTPUT_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/output/blended_voronoi_121364_0.mp4'
+BALL_TRACKING_OUTPUT_IMG_PATH = '/home/vphuc/Project/AI/Football_Analysis/output/ball_tracking_121364_0.jpg'
 
 BALL_ID = 0
 GOALKEEPER_ID = 1

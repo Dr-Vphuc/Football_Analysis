@@ -24,7 +24,7 @@ FIELD_DETECTION_MODEL = get_model(
     model_id = FIELD_DETECTION_MODEL_ID,
     api_key = ROBOFLOW_API_KEY
 )
-SOURCE_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/121364_0.mp4'
+SOURCE_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/input/121364_0.mp4'
 
 
 vertex_annotator = sv.VertexAnnotator(

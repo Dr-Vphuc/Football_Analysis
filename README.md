@@ -8,3 +8,4 @@ Tuy nhiên cân nhắc chỉnh sửa mã nguồn cho hợp lí vì lúc này vi�
 
 Hướng dẫn sửa : tách module ở phần vòng for dòng 124, sau khi xuất video xong phải release() writer lại kể kết thúc luồng của nó.
 
+[![Demo Video](https://img.youtube.com/vi/VIDEO_ID/hqdefault.jpg)](https://youtu.be/tcK_ONtxWRw)
