@@ -5,6 +5,10 @@ import numpy.typing as npt
 
 
 class ViewTransformer:
+    """
+    A class to perform perspective transformations on points and images using
+    homography.
+    """
     def __init__(
             self,
             source: npt.NDArray[np.float32],

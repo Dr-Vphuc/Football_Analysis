@@ -11,6 +11,17 @@ def replace_outliers_based_on_distance(
     positions: List[np.ndarray],
     distance_threshold: float
 ) -> List[np.ndarray]:
+    """
+    Replace positions that are too far from the last valid position with an empty array.
+    Args:
+        positions (List[np.ndarray]): List of (x, y) coordinates representing player
+            positions over time. Empty arrays represent missing data.
+        distance_threshold (float): Maximum allowed distance from the last valid
+            position. Positions exceeding this distance will be replaced with an
+            empty array.
+    Returns:
+        List[np.ndarray]: Cleaned list of positions with outliers replaced by empty arrays.
+    """
     last_valid_position: Union[np.ndarray, None] = None
     cleaned_positions: List[np.ndarray] = []
 
@@ -124,6 +135,16 @@ def resolve_goalkeepers_team_id(
     players: sv.Detections,
     goalkeepers: sv.Detections
 ) -> np.ndarray:
+    """
+    Resolve the team IDs for goalkeepers based on their proximity to the centroids
+    of the two teams.
+    Args:
+        players (sv.Detections): Detections of all players with class IDs indicating
+            their respective teams.
+        goalkeepers (sv.Detections): Detections of goalkeepers without team IDs.
+    Returns:
+        np.ndarray: Array of team IDs assigned to each goalkeeper.
+    """
     goalkeepers_xy = goalkeepers.get_anchors_coordinates(sv.Position.BOTTOM_CENTER)
     players_xy = players.get_anchors_coordinates(sv.Position.BOTTOM_CENTER)
     

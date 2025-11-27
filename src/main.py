@@ -29,15 +29,17 @@ from libs.annotators import (
     draw_paths_on_pitch)
 import cv2
 
+# Environment variables
 from dotenv import load_dotenv
 load_dotenv()
 import importlib
 _inf = importlib.import_module('inference')
 ROBOFLOW_API_KEY = os.getenv("ROBOFLOW_API_KEY") or getattr(_inf, 'API_KEY', None)
 
+# Load model YOLO detect
 PLAYER_DETECTION_MODEL_ID = "football-players-detection-3zvbc/11"
 PLAYER_DETECTION_MODEL = get_model(model_id=PLAYER_DETECTION_MODEL_ID, api_key=ROBOFLOW_API_KEY)
-
+# Load model YOLO pose
 FIELD_DETECTION_MODEL_ID = 'football-field-detection-f07vi/14'
 FIELD_DETECTION_MODEL = get_model(model_id=FIELD_DETECTION_MODEL_ID, api_key=ROBOFLOW_API_KEY)
 
@@ -48,6 +50,7 @@ VORONOI_OUTPUT_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/output/vor
 BLENDED_VORONOI_OUTPUT_VIDEO_PATH = '/home/vphuc/Project/AI/Football_Analysis/output/blended_voronoi_121364_0.mp4'
 BALL_TRACKING_OUTPUT_IMG_PATH = '/home/vphuc/Project/AI/Football_Analysis/output/ball_tracking_121364_0.jpg'
 
+# Constants
 BALL_ID = 0
 GOALKEEPER_ID = 1
 PLAYER_ID = 2
@@ -66,7 +69,7 @@ FPS    = int(CAP.get(cv2.CAP_PROP_FPS))
 VIDEO_LENGTH = int(CAP.get(cv2.CAP_PROP_FRAME_COUNT) / FPS)
 MAX_DISTANCE_THRESHOLD = 500
 
-
+# Open video writers
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out_tracking = cv2.VideoWriter(TRACKING_OUTPUT_VIDEO_PATH, fourcc, FPS, (WIDTH, HEIGHT))
 out_gameplay = cv2.VideoWriter(GAMEPLAY_OUTPUT_VIDEO_PATH, fourcc, FPS, (PITCH_WIDTH, PITCH_HEIGHT))
@@ -78,7 +81,7 @@ if not out_gameplay.isOpened(): print("gameplay writer failed")
 if not out_voronoi.isOpened(): print("voronoi writer failed")
 if not out_blended_voronoi.isOpened(): print("blended_voronoi  writer failed")
 
-
+# Define annotators and tracker
 ellipse_annotator = sv.EllipseAnnotator(
     color=sv.ColorPalette.from_hex(['#00BFFF', '#FF1493', '#FFD700']),
     thickness=2
@@ -96,11 +99,13 @@ triangle_annotator = sv.TriangleAnnotator(
 tracker = sv.ByteTrack()
 tracker.reset()
 
+# Fit team classifier using KMeans
 kmeans_fitting_frame_generator = sv.get_video_frames_generator(SOURCE_VIDEO_PATH, stride=STRIDE)
 
 team_classifier = TeamClassifier(DEVICE, BATCH_SIZE)
 crops = []
 
+# Crop player images for KMeans fitting
 print('Fitting cluster...')
 for frame in kmeans_fitting_frame_generator:
     result = PLAYER_DETECTION_MODEL.infer(frame, confidence=0.3)[0]
@@ -111,9 +116,11 @@ for frame in kmeans_fitting_frame_generator:
 
     crops += players_crops
 
+# Fit the KMeans cluster
 team_classifier.fit(crops)
 
 print('Cluster fitted\n')
+# Generate video with annotations
 print('Starting generate video...')
 
 frame_generator = sv.get_video_frames_generator(SOURCE_VIDEO_PATH)
@@ -307,6 +314,7 @@ for frame in frame_generator:
 
     path_raw.append(pitch_ball_xy)
 
+# post-process ball tracking path
 path = [
     np.empty((0, 2), dtype=np.float32) if coorinates.shape[0] >= 2 else coorinates
     for coorinates
@@ -317,6 +325,7 @@ path = [coorinates.flatten() for coorinates in path]
 
 path = replace_outliers_based_on_distance(path, MAX_DISTANCE_THRESHOLD)
 
+# draw ball tracking path
 annotated_frame = draw_pitch(CONFIG)
 annotated_frame = draw_paths_on_pitch(
     config=CONFIG,
@@ -326,6 +335,7 @@ annotated_frame = draw_paths_on_pitch(
 
 cv2.imwrite(BALL_TRACKING_OUTPUT_IMG_PATH, annotated_frame)
 
+# Release video writers
 out_tracking.release()
 out_gameplay.release()
 out_voronoi.release()
