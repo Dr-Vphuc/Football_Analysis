@@ -12,7 +12,7 @@ Hướng dẫn sửa : tách module ở phần vòng for dòng 124, sau khi xu�
 [![Demo Video](https://i.ytimg.com/an_webp/tcK_ONtxWRw/mqdefault_6s.webp?du=3000&sqp=CLy9ockG&rs=AOn4CLD0Y0gU8PLgHh6LlLi6niPmQQ6BWw)](https://youtu.be/tcK_ONtxWRw)
 
 
-##Chú thích Module
+## Chú thích Module
 
 Trìnhbay: chứa slides, báo cáo PDF của môn học  
 input: video input cho demo của dự án  
