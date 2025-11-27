@@ -1,0 +1,20 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+demo/
+*.avi
+*.mov
+
+# Logs
+*.log
+
+check_env.py
