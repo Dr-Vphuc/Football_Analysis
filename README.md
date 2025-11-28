@@ -10,7 +10,7 @@ Mã nguồn được triển khai trên Linux, nếu gặp lỗi liên quan đ�
 Cân nhắc khi chạy file main : Hãy dừng chương trình (bằng Ctrl+C trên terminal) khi sinh được 4-5s sau đó kiểm tra vid có được ghi đúng như mong đợi không để tránh mất thời gian, nếu không hãy thực hiện theo hướng dẫn bên trên.
 
 [![Demo Video](ss)](https://youtu.be/tcK_ONtxWRw)  
-[![Demo Video](<iframe width="1330" height="748" src="https://www.youtube.com/embed/tcK_ONtxWRw" title="Demo dự án Thị giác máy tính - Phân tích trận bóng đá - từ góc chiếu truyền hình đến 2D Map" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>)](https://youtu.be/tcK_ONtxWRw)
+[![Demo Video](https://i.ytimg.com/an_webp/tcK_ONtxWRw/mqdefault_6s.webp?du=3000&sqp=CNC7pMkG&rs=AOn4CLBKllpMUgKUez4GyIC6G9ESsXe7KA)](https://youtu.be/tcK_ONtxWRw)
 
 
 ## Chú thích Module
