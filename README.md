@@ -1,5 +1,9 @@
 # Football Analysis- Computer Vision
 
+
+## Video demo
+[![Demo Video](https://i.ytimg.com/an_webp/tcK_ONtxWRw/mqdefault_6s.webp?du=3000&sqp=CNC7pMkG&rs=AOn4CLBKllpMUgKUez4GyIC6G9ESsXe7KA)](https://youtu.be/tcK_ONtxWRw)
+
 ## Lưu ý quan trọng: 
 ### Chuẩn bị môi trường
 Chuẩn bị > 9 GB dung lượng cho việc tải tất cả thư viện trong requirement.txt và source code.  
@@ -12,9 +16,6 @@ Mã nguồn được triển khai trên Linux, nếu gặp lỗi liên quan đ�
 
 ### Chuẩn bị thời gian
 Tốc độ thực thi trên hđh Linux với CPU i5 13420H, GPU : Nvidia RTX 3060Ti 6GB và 16 GB RAM là 55 phút cho video 30s. Hãy cân nhắc dừng chương trình (bằng Ctrl+C trên terminal) khi sinh được 4-5s video sau đó kiểm tra vid có được ghi đúng như mong đợi không để tránh mất thời gian, nếu không hãy thực hiện theo hướng dẫn bên trên. Khi dừng sớm, ảnh tracking bóng sẽ không được tạo, bạn (thầy) có thể tạo bằng việc chạy file ball_track.py, tất nhiên file này cũng đang break sau 5 frame để tránh mất thời gian, bạn(thầy) có thế tìm đến dòng 77, 78 để xóa điều kiện dừng này.
-
-## Video demo
-[![Demo Video](https://i.ytimg.com/an_webp/tcK_ONtxWRw/mqdefault_6s.webp?du=3000&sqp=CNC7pMkG&rs=AOn4CLBKllpMUgKUez4GyIC6G9ESsXe7KA)](https://youtu.be/tcK_ONtxWRw)
 
 
 ## Chú thích Module
