@@ -7,7 +7,7 @@ Nếu không muốn tải thư viện, bạn(thầy) có thể chạy thử dự
 
 Mã nguồn được triển khai trên Linux, nếu gặp lỗi liên quan đến sinh video khi chạy trên các hệ điều hành khác, rất có thể là do việc sinh file mp4 nhiều luồng 1 lúc không thích ứng với hệ điều hành của bạn (thầy), khi đó thay vì chạy file main, hãy chạy các file tách từng phần riêng tôi (em) đã chuẩn bị sẵn gồm các file track.py, voronoi.py, blended_voronoi.py, ball_track.py, gameplay.py
 
-Cân nhắc khi chạy file main : Hãy dừng chương trình (bằng Ctrl+C trên terminal) khi sinh được 4-5s sau đó kiểm tra vid có được ghi đúng như mong đợi không để tránh mất thời gian, nếu không hãy thực hiện theo hướng dẫn bên trên.
+Cân nhắc khi chạy file main : Hãy dừng chương trình (bằng Ctrl+C trên terminal) khi sinh được 4-5s video sau đó kiểm tra vid có được ghi đúng như mong đợi không để tránh mất thời gian, nếu không hãy thực hiện theo hướng dẫn bên trên.
 
 [![Demo Video](ss)](https://youtu.be/tcK_ONtxWRw)  
 [![Demo Video](https://i.ytimg.com/an_webp/tcK_ONtxWRw/mqdefault_6s.webp?du=3000&sqp=CNC7pMkG&rs=AOn4CLBKllpMUgKUez4GyIC6G9ESsXe7KA)](https://youtu.be/tcK_ONtxWRw)
